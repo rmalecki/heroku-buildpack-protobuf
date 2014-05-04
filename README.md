@@ -1,9 +1,9 @@
 # heroku-buildpack-mapnik
 
-I am a Heroku buildpack that installs [Mapnik](http://mapnik.org) and its
-dependencies ([Boost](http://boost.org/), [GDAL](http://gdal.org/),
-ICU(http://icu-project.org/), [proj](https://trac.osgeo.org/proj/), and
+I am a Heroku buildpack that installs
 [Protocol Buffers](https://code.google.com/p/protobuf/)).
+I was built by stripping down
+[heroku-buildpack-mapnik](https://github.com/mojodna/heroku-buildpack-mapnik)
 
 When used with
 [heroku-buildpack-multi](https://github.com/ddollar/heroku-buildpack-multi),
@@ -14,31 +14,13 @@ build environment (`CPATH`, `LIBRARY_PATH`, etc.) to be set correctly.)
 
 *Note:* Python bindings are *not* currently included.
 
-## Using
-
-There are multiple variants present as branches. To use a specific variant, add
-`#branch` to the Mapnik buildpack URL in `.buildpacks`.
-
-* [master](https://github.com/mojodna/heroku-buildpack-mapnik/tree/master) -
-  Mapnik 2.2
-* [jemalloc](https://github.com/mojodna/heroku-buildpack-mapnik/tree/jemalloc) -
-  Mapnik 2.2 w/ [jemalloc](http:/www.canonware.com/jemalloc/)
-* [2.3.x](https://github.com/mojodna/heroku-buildpack-mapnik/tree/2.3.x) -
-  Mapnik 2.3.x (see
-  [`bin/compile`](https://github.com/mojodna/heroku-buildpack-mapnik/tree/2.3.x/bin/compile)
-  for the revision provided).
-* [2.3.x+jemalloc](https://github.com/mojodna/heroku-buildpack-mapnik/tree/2.3.x+jemalloc) -
-  Mapnik 2.3.x with jemalloc
-* [2.3.x-debug+jemalloc](https://github.com/mojodna/heroku-buildpack-mapnik/tree/2.3.x-debug+jemalloc) -
-  Debug build of Mapnik 2.3.x with jemalloc
-
 When creating a new Heroku app:
 
 ```bash
 heroku apps:create -b https://github.com/mojodna/heroku-buildpack-multi.git#build-env
 
 cat << EOF > .buildpacks
-https://github.com/mojodna/heroku-buildpack-mapnik.git
+https://github.com/hfwang/heroku-buildpack-protobuf.git
 https://github.com/heroku/heroku-buildpack-nodejs.git
 EOF
 

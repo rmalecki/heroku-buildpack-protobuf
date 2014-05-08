@@ -42,20 +42,7 @@ git push heroku master
 
 ## Building
 
-GDAL and proj were built according to [the steps in the GDAL buildpack](https://github.com/mojodna/heroku-buildpack-gdal#building).
-
-Everything else was built in an Ubuntu 10.04 `chroot`. (See
-[heroku/stack-images](https://github.com/heroku/stack-images) for package
-listings and post-installation.)
-
-`chroot` preparation:
-
-```bash
-mkdir app tmp
-sudo /vagrant/bin/install-stack cedar64-2.0.0.img.gz
-sudo mount -o bind /dev /mnt/stacks/cedar64-2.0.0/dev/
-sudo mount -o bind /home/vagrant/tmp /mnt/stacks/cedar64-2.0.0/tmp/
-sudo mount -o bind /home/vagrant/app /mnt/stacks/cedar64-2.0.0/app/
-```
-
-[Steps to be updated next time Mapnik or its dependencies are upgraded.]
+You can build the protobuf lib by taking a look at `make.sh`, the comment at the
+top explains how to build via anvil (the heroku build service). When executed
+successfully, anvil will print a URL where the built binaries will be available
+from.

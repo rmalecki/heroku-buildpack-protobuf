@@ -33,7 +33,7 @@ When modifying an existing Heroku app:
 heroku config:set BUILDPACK_URL=https://github.com/mojodna/heroku-buildpack-multi.git#build-env
 
 cat << EOF > .buildpacks
-https://github.com/mojodna/heroku-buildpack-mapnik.git
+https://github.com/hfwang/heroku-buildpack-protobuf.git
 https://github.com/heroku/heroku-buildpack-nodejs.git
 EOF
 

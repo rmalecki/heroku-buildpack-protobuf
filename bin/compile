@@ -38,7 +38,7 @@ function vendor() {
 }
 
 echo "-----> Vendoring binaries"
-vendor "https://github.com/google/protobuf/archive/v3.4.0.tar.gz"   "$BUILD_DIR/vendor/protobuf"
+vendor "https://codeload.github.com/google/protobuf/tar.gz/v3.4.0"   "$BUILD_DIR/vendor/protobuf"
 
 echo "-----> Configuring build environment"
 

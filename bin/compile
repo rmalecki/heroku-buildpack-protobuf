@@ -38,8 +38,7 @@ function vendor() {
 }
 
 echo "-----> Vendoring binaries"
-vendor "https://s3.amazonaws.com/mojodna-heroku/boost-1_49_0-2.tar.gz"   "$BUILD_DIR/vendor/boost"
-vendor "https://s3.amazonaws.com/mojodna-heroku/protobuf-2.5.0-1.tar.gz" "$BUILD_DIR/vendor/protobuf"
+vendor "https://github.com/google/protobuf/archive/v3.4.0.tar.gz"   "$BUILD_DIR/vendor/protobuf"
 
 echo "-----> Configuring build environment"
 

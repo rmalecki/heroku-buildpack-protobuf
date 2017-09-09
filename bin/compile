@@ -12,7 +12,7 @@ function vendor() {
   binary="$1"
   path="$2"
 
-  echo "Fetching $binary" | indent
+  echo "Fetching $binary"
   mkdir -p $path
   curl $binary -L -s -o - | unzip -d $path -
 

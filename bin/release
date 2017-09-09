@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+# bin/release <build-dir>
+BUILD_DIR=$1
 
 echo "---"
 echo "addons:"
 echo "config_vars:"
-echo "  PATH: $PATH:/app/vendor/protobuf/bin"
+echo "  PATH: $PATH:$BUILD_DIR/vendor/protobuf/bin"
 echo "default_process_types:"

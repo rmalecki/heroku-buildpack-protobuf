@@ -1,26 +1,13 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-set -e # fail fast
-
-# parse params
-BUILD_DIR=$1
-CACHE_DIR=$2
-BUILDPACK_DIR=$(cd $(dirname $0)/..; pwd)
 TMPFILE=`mktemp`
+binary="https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip"
+path="vendor/protobuf"
 
-function vendor() {
-  binary="$1"
-  path="$2"
-
-  echo "Fetching $binary"
-  mkdir -p $path
-  wget $binary -O $TMPFILE
-  unzip $TMPFILE -d $path
-  rm $TMPFILE
-
-  true
-}
-
-echo "-----> Vendoring binaries"
-vendor "https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip"   "$BUILD_DIR/vendor/protobuf"
+echo "-----> Vendoring protobuf3"
+cd $1
+mkdir -p $path
+wget $binary -O $TMPFILE
+unzip $TMPFILE -d $path
+rm $TMPFILE

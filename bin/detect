@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-echo "Protobuf" && exit 0
+echo "Protobuf3" && exit 0

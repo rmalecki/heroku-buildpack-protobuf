@@ -8,58 +8,18 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 BUILDPACK_DIR=$(cd $(dirname $0)/..; pwd)
 
-# use pigz if available for (potentially) faster decompression
-type pigz > /dev/null 2>&1 && alias tar='tar --use-compress-program=pigz'
-
-function indent() {
-  c='s/^/       /'
-  case $(uname) in
-    Darwin) sed -l "$c";;
-    *)      sed -u "$c";;
-  esac
-}
-
 function vendor() {
   binary="$1"
   path="$2"
 
   echo "Fetching $binary" | indent
   mkdir -p $path
-  curl $binary -s -o - | tar xz -C $path -f -
+  curl $binary -L -s -o - | unzip -d $path -
 
   [ -d "$path/bin" ] && export PATH=$path/bin:$PATH
-  export CPPPATH="$path/include:$CPPPATH"
-  export CPATH="$path/include:$CPATH"
-  export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
-  export LD_LIBRARY_PATH="$path/lib:$LD_LIBRARY_PATH"
-  [ -d "$path/lib/pkgconfig" ] && export PKG_CONFIG_PATH="$path/lib/pkgconfig:$PKG_CONFIG_PATH"
 
   true
 }
 
 echo "-----> Vendoring binaries"
-vendor "https://codeload.github.com/google/protobuf/tar.gz/v3.4.0"   "$BUILD_DIR/vendor/protobuf"
-
-echo "-----> Configuring build environment"
-
-cat <<EOF > $BUILDPACK_DIR/export
-export PATH="$PATH:\$PATH"
-export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="\$LIBRARY_PATH:$LIBRARY_PATH"
-export PKG_CONFIG_PATH="\$PKG_CONFIG_PATH:$PKG_CONFIG_PATH"
-export CPPPATH="\$CPPPATH:$CPPPATH"
-export CPATH="\$CPATH:$CPATH"
-EOF
-
-echo "-----> Building runtime environment"
-mkdir -p $BUILD_DIR/.profile.d
-
-cat <<EOF > $BUILD_DIR/.profile.d/mapnik.sh
-# Mapnik build and runtime paths
-export PATH="${PATH//$BUILD_DIR//app}:\$PATH"
-export LD_LIBRARY_PATH="\$LD_LIBRARY_PATH:${LD_LIBRARY_PATH//$BUILD_DIR//app}"
-export LIBRARY_PATH="\$LIBRARY_PATH:${LIBRARY_PATH//$BUILD_DIR//app}"
-export PKG_CONFIG_PATH="\$PKG_CONFIG_PATH:${PKG_CONFIG_PATH//$BUILD_DIR//app}"
-export CPPPATH="\$CPPPATH:${CPPPATH//$BUILD_DIR//app}"
-export CPATH="\$CPATH:${CPATH//$BUILD_DIR//app}"
-EOF
+vendor "https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip"   "$BUILD_DIR/vendor/protobuf"

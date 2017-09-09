@@ -3,11 +3,16 @@
 
 TMPFILE=`mktemp`
 binary="https://github.com/google/protobuf/releases/download/v3.4.0/protoc-3.4.0-linux-x86_64.zip"
-path="vendor/protobuf"
+build_path=$(cd $1 && pwd)
+path=$build_path/vendor/protobuf
 
 echo "-----> Vendoring protobuf3"
-cd $1
 mkdir -p $path
 wget $binary -O $TMPFILE
 unzip $TMPFILE -d $path
 rm $TMPFILE
+
+mkdir -p $build_path/.profile.d
+
+export_line="export PATH=\$PATH:$path/bin"
+echo $export_line >> $build_path/.profile.d/elixir_buildpack_paths.sh

@@ -19,8 +19,6 @@ function vendor() {
   unzip $TMPFILE -d $path
   rm $TMPFILE
 
-  [ -d "$path/bin" ] && export PATH=$path/bin:$PATH
-
   true
 }
 

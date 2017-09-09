@@ -7,6 +7,7 @@ set -e # fail fast
 BUILD_DIR=$1
 CACHE_DIR=$2
 BUILDPACK_DIR=$(cd $(dirname $0)/..; pwd)
+TMPFILE=`mktemp`
 
 function vendor() {
   binary="$1"
@@ -14,7 +15,9 @@ function vendor() {
 
   echo "Fetching $binary"
   mkdir -p $path
-  curl $binary -L -s -o - | unzip -d $path -
+  wget $binary -O $TMPFILE
+  unzip $TMPFILE -d $path
+  rm $TMPFILE
 
   [ -d "$path/bin" ] && export PATH=$path/bin:$PATH
 
